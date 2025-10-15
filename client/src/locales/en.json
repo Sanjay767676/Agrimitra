@@ -1,0 +1,121 @@
+{
+  "nav": {
+    "home": "Home",
+    "cropSuggestion": "Crop Suggestion", 
+    "schemes": "Schemes",
+    "marketplace": "Marketplace",
+    "chat": "Chat",
+    "profile": "Profile"
+  },
+  "landing": {
+    "title": "Agrimitra",
+    "subtitle": "Your Digital Farming Companion",
+    "description": "AI-powered farming advice, weather insights, and multilingual support to help you grow better crops and increase your harvest.",
+    "getStarted": "Get Started",
+    "loginAsFarmer": "Login as Farmer"
+  },
+  "profile": {
+    "title": "Farmer Profile",
+    "subtitle": "Tell us about your farming to get personalized advice",
+    "personalInfo": "Personal Information",
+    "farmInfo": "Farm Information",
+    "name": "Farmer Name",
+    "location": "Location",
+    "cropType": "Crop Type",
+    "soilType": "Soil Type",
+    "landSize": "Land Size",
+    "irrigation": "Irrigation Type",
+    "websiteLanguage": "Website Language",
+    "chatbotLanguage": "Chatbot Language",
+    "languagePrefs": "Language Preferences",
+    "languageNote": "Choose different languages for interface and chat communication",
+    "saveProfile": "Save Profile & Continue to Chat",
+    "required": "Required",
+    "selectCrop": "Select crop type",
+    "selectSoil": "Select soil type",
+    "selectIrrigation": "Select irrigation type"
+  },
+  "chat": {
+    "title": "KRISHI SAKHI",
+    "subtitle": "Your AI Farming Assistant",
+    "activeAlerts": "Active Alerts",
+    "currentWeather": "Current Weather",
+    "temperature": "Temperature",
+    "humidity": "Humidity",
+    "rainChance": "Rain Chance",
+    "wind": "Wind",
+    "placeholder": "Ask KRISHI SAKHI about your crops, weather, or farming practices...",
+    "voiceInput": "Voice Input",
+    "chatLanguage": "Chat Language",
+    "voiceReady": "Voice Input Ready",
+    "securePrivate": "Secure & Private",
+    "recording": "Recording...",
+    "welcomeMessage": "🙏 Namaste! I'm KRISHI SAKHI, your AI farming companion. I can help you with crop advice, weather insights, and farming best practices. How can I assist you today?"
+  },
+  "alerts": {
+    "heavyRain": "Heavy Rain Alert",
+    "heavyRainDesc": "Rain expected in next 6 hours. Delay irrigation and spraying.",
+    "highTemp": "High Temperature",
+    "highTempDesc": "Temperature above 35°C. Consider increasing irrigation frequency.",
+    "pestRisk": "Pest Outbreak Risk",
+    "pestRiskDesc": "High humidity favorable for pest growth. Monitor crops closely.",
+    "highPriority": "High Priority",
+    "mediumPriority": "Medium Priority",
+    "lowPriority": "Low Priority"
+  },
+  "crops": {
+    "rice": "Rice/Paddy",
+    "wheat": "Wheat",
+    "corn": "Corn/Maize",
+    "cotton": "Cotton",
+    "sugarcane": "Sugarcane",
+    "vegetables": "Vegetables",
+    "fruits": "Fruits",
+    "pulses": "Pulses",
+    "spices": "Spices",
+    "other": "Other"
+  },
+  "soils": {
+    "clay": "Clay Soil",
+    "sandy": "Sandy Soil",
+    "loamy": "Loamy Soil",
+    "black": "Black Soil",
+    "red": "Red Soil",
+    "laterite": "Laterite Soil"
+  },
+  "irrigation": {
+    "drip": "Drip Irrigation",
+    "sprinkler": "Sprinkler",
+    "flood": "Flood/Basin",
+    "furrow": "Furrow",
+    "rainfed": "Rain-fed",
+    "bore": "Bore Well",
+    "canal": "Canal"
+  },
+  "units": {
+    "acres": "Acres",
+    "hectares": "Hectares",
+    "bigha": "Bigha",
+    "guntha": "Guntha"
+  },
+  "dashboard": {
+    "title": "Farm Dashboard",
+    "subtitle": "Monitor your crop performance and farming analytics",
+    "cropHealth": "Crop Health",
+    "weatherForecast": "Weather Forecast",
+    "marketPrice": "Market Price",
+    "yieldAnalytics": "Yield Analytics"
+  },
+  "marketplace": {
+    "title": "Agricultural Marketplace",
+    "subtitle": "Buy and sell farming equipment, seeds, and produce",
+    "equipment": "Equipment",
+    "seeds": "Seeds & Plants",
+    "fertilizers": "Fertilizers",
+    "produce": "Produce"
+  },
+  "footer": {
+    "tagline": "Empowering farmers with AI-driven agricultural solutions",
+    "copyright": "© 2025 Agrimitra. All rights reserved."
+  }
+}

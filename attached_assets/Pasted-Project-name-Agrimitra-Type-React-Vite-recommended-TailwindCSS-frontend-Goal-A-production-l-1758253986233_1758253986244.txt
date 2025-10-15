@@ -1,0 +1,167 @@
+Project name: Agrimitra
+Type: React (Vite recommended) + TailwindCSS frontend
+Goal: A production-looking, mobile-first prototype that runs in Replit and demonstrates:
+  - Farmer profile management
+  - Website Language (UI) and Chatbot Language settings (Malayalam priority)
+  - Chat interface (KRISHI SAKHI) with friendly, conversational tone
+  - OpenWeather integration (real weather -> advisory)
+  - Translation pipeline for multilingual input/output
+  - Alerts sidebar, clickable alerts opening chat advice
+  - STT (mic) for farmer input + TTS (speaker) for KRISHI SAKHI output (browser demo + cloud placeholder)
+  - Optional placeholders for Chart.js dashboard, Marketplace, Schemes pages
+
+======== High-level scaffold & env ========
+1. Create a React (Vite) project and configure TailwindCSS.
+2. Use React Router for pages: Landing, Profile, Chat, Dashboard, Marketplace (placeholders ok).
+3. Create a config toggles file: useFirebase = true/false (local JSON fallback).
+4. Create `.env.example` and instruct Replit to create `.env`:
+   - REACT_APP_OPENWEATHER_KEY=ad2346767fce3e9feefd0c79a65ddcc9
+   - REACT_APP_OPENAI_KEY=REPLACE_WITH_YOUR_OPENAI_OR_GEMINI_KEY
+   - REACT_APP_FIREBASE_API_KEY=...
+   - REACT_APP_FIREBASE_AUTH_DOMAIN=...
+   - REACT_APP_FIREBASE_PROJECT_ID=...
+   - TRANSLATE_API_KEY=REPLACE_WITH_TRANSLATE_API_KEY
+   - STT_PROVIDER=browser|google (default=browser)
+   - TTS_PROVIDER=browser|google (default=browser)
+5. Produce README with run steps: `npm install`, `npm run dev`, where to set keys/secrets, and a note to use Replit Secrets.
+
+======== UI / Styling / i18n ========
+- Theme: green (#1f7a3a) + earthy/beige accents, rounded-2xl cards, shadow-lg, smooth transitions.
+- Mobile-first responsive layout.
+- Implement i18n using react-i18next or JSON language files. Include full Malayalam & English JSON files; provide placeholders for Hindi, Tamil, Telugu, Kannada, Bengali, Marathi, Gujarati, Punjabi, Urdu, Odia, Assamese.
+- Make Malayalam default for both Website & Chatbot on first run.
+- Header/Nav: Home | Crop Suggestion | Schemes | Marketplace | Chat | Profile
+- Floating Chatbot launcher (bottom-right) and full Chat page.
+
+======== Pages & components (implement) ========
+1) Landing Page
+ - Hero: "Agrimitra – Your Digital Farming Companion"
+ - Buttons: [Get Started] -> Profile, [Login as Farmer] -> Chat
+ - Background farmland gradient; Footer © Agrimitra 2025
+
+2) Farmer Profile Page
+ - Form fields: Name, Crop type, Soil type, Land size + units, Irrigation type
+ - Website Language selector (default Malayalam)
+ - Chatbot Language selector (default Malayalam)
+ - Validate required fields
+ - On submit: save profile + language prefs to Firebase or local JSON, show summary card, redirect to Chat
+ - Persist preferences so UI + chatbot respect languages after reload
+
+3) Chat / Advisory Page (main)
+ - Layout: Left Sidebar + Right Chat Window
+ - Sidebar: profile summary, Alerts panel (Weather 🌦️, Pest 🐛, Market 📢), latest alerts from OpenWeather, clickable alerts that pin/open advice in chat
+ - Chat window:
+   - Messages: Farmer (right, green), KRISHI SAKHI (left, beige)
+   - Input area:
+     - Text input
+     - Send button
+     - Mic button (STT) — hold-to-record or toggle record; shows waveform/recording indicator
+     - TTS play button on each KRISHI SAKHI message to play audio
+     - Global TTS toggle (on/off)
+   - Chat history persisted in local state or Firebase
+   - Messages displayed in Chatbot Language (translation pipeline applied)
+
+======== Chatbot (KRISHI SAKHI) workflow ========
+- System prompt (in code comments) to send to AI:
+  "You are KRISHI SAKHI, a friendly farming companion. Use the farmer's profile and recent weather to give short, actionable advice. Use emojis and a conversational, non-technical tone. If recommending irrigation, reference temperature and rain forecast. Keep answers concise and helpful."
+- handleSendMessage(messageText) flow:
+  1. Determine ChatbotLanguage from profile (default Malayalam)
+  2. If message language ≠ English:
+     - translateText(messageText, source=ChatbotLanguage, target='en')
+     - (For demo: browser-based translation stub or call Translate API using TRANSLATE_API_KEY)
+  3. fetchWeather(profile.location || geolocation) -> temp, humidity, forecast
+  4. Build AI prompt including:
+     - Farmer profile summary (name, crop, soil, irrigation, land size)
+     - Weather snapshot (temp, humidity, condition, rain probability)
+     - Recent conversation context (last 3 messages)
+     - Clear instructions for actionable advice (include rules: if temp >35°C recommend irrigation; if raining advise against irrigation; if humidity high + crop=paddy say favorable)
+     - Friendly tone + emojis + short steps
+  5. callAI(prompt) -> get englishResponse
+     - callAI should be a wrapper for OpenAI/Gemini (server-side proxy recommended). For prototype a client call with REACT_APP_OPENAI_KEY is acceptable but add security note in README.
+  6. If ChatbotLanguage ≠ English:
+     - translateText(englishResponse, source='en', target=ChatbotLanguage)
+  7. Append translated response to chat and persist
+  8. If TTS enabled -> ttsSpeak(responseText, lang=ChatbotLanguage)
+
+======== STT (Mic) & TTS (Speaker) details ========
+- Provide two operating modes for both STT and TTS:
+  - `browser` mode (demo): uses Web Speech API
+    - STT: window.SpeechRecognition (or webkitSpeechRecognition) for live speech-to-text
+      - Implement UI: mic button toggles recording; show live transcription; on finish call handleSendMessage(transcript)
+      - Note: require HTTPS and user permission; include fallback message when not supported
+    - TTS: window.speechSynthesis for playing KRISHI SAKHI responses
+      - ttsSpeak(text, langCode) chooses matching voice if available; includes fallback to English
+  - `google` (cloud) mode (production placeholder):
+    - STT: Google Cloud Speech-to-Text (send recorded audio to backend endpoint)
+    - TTS: Google Cloud Text-to-Speech (get audio bytes from backend, play via Audio element)
+    - Provide clear placeholders and comments where a server-side proxy endpoint must be implemented for security and audio streaming
+- Implement UI affordances:
+  - Mic button: press-and-hold to record OR click-to-toggle; show recording spinner and duration
+  - Play button on each bot message to listen to reply
+  - Global TTS toggle in chat header -> enable/disable auto-play of bot replies
+- In README and code comments: explain browser demo is adequate for hackathon; for production recommend using server-side credentials and not embedding keys in frontend
+
+======== Weather & Alerts implementation ========
+- fetchWeather(location):
+  - Call OpenWeather Current Weather + OneCall/Forecast for 3-day outlook using REACT_APP_OPENWEATHER_KEY
+  - Return object {tempC, humidity, condition, rainProb24h, forecastArray}
+- generateAlerts(weather, profile):
+  - If rainProb24h > 0.6 -> Rain alert "Rain expected — delay spraying/irrigation"
+  - If tempC > 35 -> Heat alert "High temp — consider irrigating"
+  - If humidity > 85 && profile.crop includes 'paddy' -> "High humidity — good for paddy growth"
+  - Add alerts with uid, severity, createdAt; store to local state/Firebase
+  - On new alert: create a short KRISHI SAKHI message via callAI or via a template translated into ChatbotLanguage and append to chat
+
+======== Translation (multilingual) ========
+- translateText(text, sourceLang, targetLang) wrapper:
+  - For demo, implement mock translator that maps known phrases OR call a Translate API (e.g., Google Translate / OpenAI translations)
+  - Use TRANSLATE_API_KEY in env when calling cloud translation
+  - Ensure UI strings use i18n resources (WebsiteLanguage) while all chat text is translated using translateText pipeline
+- Provide JSON language files for Malayalam and English keys for all UI text; placeholders for other languages
+
+======== Explicit function stubs to implement in code (include comments) ========
+- async saveProfile(profile) // Firebase or local JSON
+- async loadProfile(userId)
+- setWebsiteLanguage(lang) // update i18n
+- setChatbotLanguage(lang)
+- async fetchWeather(location)
+- generateAlerts(weather, profile)
+- async translateText(text, sourceLang, targetLang)
+- async callAI(prompt) // wrapper for OpenAI/Gemini; comment to recommend server proxy
+- async handleSendMessage(messageText)
+- sttStart(), sttStop() // browser & cloud modes (clear placeholders)
+- ttsSpeak(text, lang) // browser.speechSynthesis or cloud TTS (placeholder)
+
+======== Security & developer notes ========
+- Do NOT hardcode secret keys. Use Replit secrets or .env (and add to .gitignore)
+- README must clearly explain:
+  - where to place keys
+  - how to switch STT/TTS providers (browser vs cloud)
+  - why server-side proxy recommended for openai/translate/tts
+- Provide .env.example with REACT_APP_OPENWEATHER_KEY prefilled, others as placeholders
+- Code comments to indicate where to implement secure server endpoints for STT/TTS/AI
+
+======== Deliverables (what Replit AI should produce) ========
+- Working React + Tailwind project runnable with `npm run dev`
+- Pages: Landing, Profile, Chat (fully implemented), Dashboard (placeholder), Marketplace (placeholder)
+- Chat implementation that:
+  - Uses translation pipeline
+  - Fetches OpenWeather using provided key
+  - Assembles AI prompt using profile + weather
+  - Shows STT UI and TTS play UI (browser demo working)
+- .env.example with keys and README with clear instructions
+- i18n JSON files for Malayalam & English and selectors for other Indian languages
+- Clear code comments marking integration points and security notes
+
+======== UX / AI prompt guidance (for code comments) ========
+- Example system prompt to send to AI:
+  "You are KRISHI SAKHI, a friendly farming companion. The farmer's profile: {name, crop, soil, irrigation, landSize}. Current weather: {tempC}°C, {humidity}%, {condition}. Answer in short, friendly bullet points. Use emojis like 🌞, 🌧️, 🌾. If temperature >35°C recommend irrigation; if raining advise against irrigation; if humidity high and crop=paddy note it as favorable. Keep it actionable and non-technical."
+- Always attach last 3 messages as context
+
+======== Final note ========
+- Make Malayalam the default selected language for both Website and Chatbot on first load.
+- Ensure selectors clearly indicate "Website Language" and "Chatbot Language" in the Profile page.
+- Make Alerts clickable and cause KRISHI SAKHI to post a contextual reply in the chat (and optionally speak it when TTS enabled).
+- For hackathon/demo: browser STT & TTS is acceptable and should be fully functional; include cloud provider stubs for production readiness.
+
+End of prompt.
