@@ -4,6 +4,7 @@ export interface SchemeItem {
   state: string;
   category: string;
   url: string;
+  applicationUrl?: string;
   description: string;
 }
 
@@ -17,9 +18,8 @@ class SchemesService {
     const resp = await fetch(`/api/schemes${qs.toString() ? `?${qs.toString()}` : ""}`);
     if (!resp.ok) throw new Error("Failed to fetch schemes");
     const data = await resp.json();
-    return data.schemes as SchemeItem[];
+    return (data.schemes || []) as SchemeItem[];
   }
 }
 
 export const schemesService = new SchemesService();
-

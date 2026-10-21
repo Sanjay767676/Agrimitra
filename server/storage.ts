@@ -18,7 +18,6 @@ export interface IStorage {
   createAlert(alert: InsertWeatherAlert): Promise<WeatherAlert>;
   getAlerts(profileId: string): Promise<WeatherAlert[]>;
   markAlertAsRead(alertId: string): Promise<WeatherAlert | undefined>;
-  deleteAlert(alertId: string): Promise<boolean>;
 }
 
 export class MemStorage implements IStorage {
@@ -41,6 +40,8 @@ export class MemStorage implements IStorage {
       id,
       userId: insertProfile.userId ?? null,
       location: insertProfile.location ?? null,
+      websiteLanguage: insertProfile.websiteLanguage ?? "ml",
+      chatbotLanguage: insertProfile.chatbotLanguage ?? "ml",
       createdAt: now,
       updatedAt: now,
     };
@@ -143,33 +144,6 @@ export class MemStorage implements IStorage {
     return updated;
   }
 
-  async deleteAlert(alertId: string): Promise<boolean> {
-    return this.alerts.delete(alertId);
-  }
-
-  // Utility methods for debugging/admin
-  getAllProfiles(): FarmerProfile[] {
-    return Array.from(this.profiles.values());
-  }
-
-  getAllMessages(): ChatMessage[] {
-    return Array.from(this.messages.values());
-  }
-
-  getAllAlerts(): WeatherAlert[] {
-    return Array.from(this.alerts.values());
-  }
-
-  // Stats methods
-  getStats() {
-    return {
-      totalProfiles: this.profiles.size,
-      totalMessages: this.messages.size,
-      totalAlerts: this.alerts.size,
-      profilesWithMessages: new Set(Array.from(this.messages.values()).map(m => m.profileId)).size,
-      profilesWithAlerts: new Set(Array.from(this.alerts.values()).map(a => a.profileId)).size,
-    };
-  }
 }
 
 export const storage = new MemStorage();

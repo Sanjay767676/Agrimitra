@@ -30,16 +30,6 @@ class StorageService {
     }
   }
 
-  async deleteProfile(): Promise<void> {
-    try {
-      localStorage.removeItem(this.PROFILE_KEY);
-      localStorage.removeItem(this.CHAT_HISTORY_KEY);
-    } catch (error) {
-      console.error("Error deleting profile:", error);
-      throw new Error("Failed to delete profile");
-    }
-  }
-
   // Chat history management
   async saveChatHistory(profileId: string, messages: ChatMessage[]): Promise<void> {
     try {
@@ -69,30 +59,9 @@ class StorageService {
     }
   }
 
-  async clearChatHistory(profileId: string): Promise<void> {
-    try {
-      const chatKey = `${this.CHAT_HISTORY_KEY}_${profileId}`;
-      localStorage.removeItem(chatKey);
-    } catch (error) {
-      console.error("Error clearing chat history:", error);
-      throw new Error("Failed to clear chat history");
-    }
-  }
-
   // Utility methods
   private generateId(): string {
     return Date.now().toString(36) + Math.random().toString(36).substr(2);
-  }
-
-  // Future: Firebase integration
-  async syncWithFirebase(): Promise<void> {
-    // Placeholder for Firebase sync when implemented
-    console.log("Firebase sync not implemented yet");
-  }
-
-  async enableFirebaseSync(firebaseConfig: any): Promise<void> {
-    // Placeholder for enabling Firebase
-    console.log("Firebase sync setup not implemented yet");
   }
 }
 

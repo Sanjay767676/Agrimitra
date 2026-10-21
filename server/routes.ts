@@ -1,6 +1,5 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
-import { z } from "zod";
 import { storage } from "./storage";
 import { insertFarmerProfileSchema, insertChatMessageSchema, insertWeatherAlertSchema } from "@shared/schema";
 
@@ -138,8 +137,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ error: "Location parameter required" });
       }
 
-      const apiKey = process.env.OPENWEATHER_API_KEY || "ad2346767fce3e9feefd0c79a65ddcc9";
-      
+      const apiKey = process.env.OPENWEATHER_API_KEY;
+      if (!apiKey) {
+        return res.status(503).json({ error: "OPENWEATHER_API_KEY is not configured" });
+      }
+
       // Get coordinates for location
       const geoResponse = await fetch(
         `https://api.openweathermap.org/geo/1.0/direct?q=${encodeURIComponent(location)}&limit=1&appid=${apiKey}`
@@ -206,7 +208,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const systemPrompt = buildSystemPrompt(context);
 
       const geminiKey = process.env.GEMINI_API_KEY;
-      const openaiKey = process.env.OPENAI_API_KEY || process.env.REACT_APP_OPENAI_KEY;
+      const openaiKey = process.env.OPENAI_API_KEY;
       const provider = process.env.AI_PROVIDER || (geminiKey ? "gemini" : (openaiKey ? "openai" : undefined));
 
       if (!provider) {
@@ -216,6 +218,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       if (provider === "gemini") {
+        if (!geminiKey) {
+          return res.status(500).json({ error: "GEMINI_API_KEY is not configured" });
+        }
         const model = process.env.GEMINI_MODEL || "gemini-1.5-flash";
         const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent?key=${geminiKey}`;
 
@@ -252,6 +257,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       // Fallback to OpenAI
+      if (!openaiKey) {
+        return res.status(500).json({ error: "OPENAI_API_KEY is not configured" });
+      }
       const response = await fetch("https://api.openai.com/v1/chat/completions", {
         method: "POST",
         headers: {
@@ -314,7 +322,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           state: "ALL",
           category: "credit",
           url: "https://www.mysaathi.org/kisan-credit-card",
-          applicationUrl: "https://pmegp.said.com/", // placeholder
+          applicationUrl: "https://www.mysaathi.org/kisan-credit-card",
           description: "Short-term credit for cultivation and other needs with simplified disbursal.",
         },
         {
@@ -570,8 +578,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
 }
 
 function buildSystemPrompt(context: any): string {
-  const { profile, weather, recentMessages } = context;
-  
+  const { profile, weather } = context;
+
   let prompt = `You are KRISHI SAKHI, a friendly AI farming companion for Indian farmers. Your role is to provide practical, actionable farming advice in a conversational, non-technical tone.
 
 FARMER PROFILE:

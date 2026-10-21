@@ -1,6 +1,28 @@
+# Dependencies
 node_modules
+
+# Build output
 dist
+build
+
+# Environment files (never commit secrets)
+.env
+.env.*
+!.env.example
+
+# Editor / OS
 .DS_Store
+Thumbs.db
+*.local
+
+# Local tooling state
+.local
+
+# Logs
+*.log
+npm-debug.log*
+
+# Generated / archives
 server/public
 vite.config.ts.*
 *.tar.gz

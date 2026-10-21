@@ -7,6 +7,8 @@ export default function Marketplace() {
   const { t } = useTranslation();
   const { profile } = useProfile();
   const [trending, setTrending] = useState<{ pesticides: any[]; equipment: any[] } | null>(null);
+  const [products, setProducts] = useState<{ name: string; url: string; imageUrl?: string }[]>([]);
+  const [productsLoading, setProductsLoading] = useState(false);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -71,14 +73,16 @@ export default function Marketplace() {
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           {categories.map((category, index) => (
             <Card key={index} className="shadow-lg text-center hover:shadow-xl transition-shadow cursor-pointer" onClick={async () => {
+              setProductsLoading(true);
               try {
                 const resp = await fetch(`/api/market/products?category=${category.key}`);
                 const data = await resp.json();
-                setTrending({
-                  pesticides: trending?.pesticides || [],
-                  equipment: (data.products || []).map((p: any) => ({ name: p.name, use: p.category, tip: p.url }))
-                });
-              } catch {}
+                setProducts(data.products || []);
+              } catch {
+                setProducts([]);
+              } finally {
+                setProductsLoading(false);
+              }
             }}>
               <CardContent className="p-6">
                 <i className={`${category.icon} text-primary text-3xl mb-4`}></i>
@@ -88,6 +92,37 @@ export default function Marketplace() {
             </Card>
           ))}
         </div>
+
+        {/* Category Products */}
+        {(productsLoading || products.length > 0) && (
+          <Card className="shadow-lg mb-8">
+            <CardHeader>
+              <CardTitle>{t("marketplace.products", { defaultValue: "Products" })}</CardTitle>
+            </CardHeader>
+            <CardContent>
+              {productsLoading ? (
+                <p className="text-muted-foreground">{t("loading", { defaultValue: "Loading..." })}</p>
+              ) : (
+                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {products.map((p, idx) => (
+                    <a
+                      key={idx}
+                      href={p.url}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="p-4 rounded-md border border-border hover:bg-muted/40"
+                    >
+                      <div className="font-medium text-foreground">{p.name}</div>
+                      <span className="text-xs text-primary mt-1 inline-block">
+                        {t("marketplace.buyNow", { defaultValue: "Buy now" })}
+                      </span>
+                    </a>
+                  ))}
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        )}
 
         {/* Trending via AI */}
         <Card className="shadow-lg">

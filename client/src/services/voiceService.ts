@@ -142,21 +142,6 @@ class VoiceService {
 
     return ttsLanguageMap[langCode] || 'en-US';
   }
-
-  // Cloud-based STT/TTS placeholders for production
-  async cloudSTT(audioBlob: Blob, language: string): Promise<string> {
-    // Placeholder for Google Cloud Speech-to-Text API
-    // In production, this would send audio to a backend endpoint
-    // which would call the Google Cloud Speech API securely
-    throw new Error('Cloud STT not implemented - use browser STT for demo');
-  }
-
-  async cloudTTS(text: string, language: string): Promise<Blob> {
-    // Placeholder for Google Cloud Text-to-Speech API
-    // In production, this would call a backend endpoint
-    // which would generate audio using Google Cloud TTS API
-    throw new Error('Cloud TTS not implemented - use browser TTS for demo');
-  }
 }
 
 export const voiceService = new VoiceService();

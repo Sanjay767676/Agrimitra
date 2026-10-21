@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import type { FarmerProfile } from "../types";
 import { storageService } from "../services/storageService";

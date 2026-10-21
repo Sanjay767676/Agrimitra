@@ -6,12 +6,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useProfile } from "../hooks/useProfile";
 import { useWeather } from "../hooks/useWeather";
+import { schemesService, type SchemeItem } from "../services/schemesService";
 
 export default function Dashboard() {
   const { t } = useTranslation();
   const { profile } = useProfile();
   const { weather, isLoading: weatherLoading } = useWeather();
-  const [schemes, setSchemes] = useState<any[]>([]);
+  const [schemes, setSchemes] = useState<SchemeItem[]>([]);
   const [loadingSchemes, setLoadingSchemes] = useState(false);
   const [yieldFormOpen, setYieldFormOpen] = useState(false);
   const [yieldInputs, setYieldInputs] = useState({ crop: profile?.cropType || "", area: "", unit: "hectare", variety: "", irrigation: profile?.irrigation || "", fertilizerLevel: "medium", sowingDate: "", location: profile?.location || "" });
@@ -21,11 +22,7 @@ export default function Dashboard() {
     const loadSchemes = async () => {
       setLoadingSchemes(true);
       try {
-        const qs = new URLSearchParams();
-        if (profile?.location) qs.set("state", profile.location);
-        const resp = await fetch(`/api/schemes${qs.toString() ? `?${qs.toString()}` : ""}`);
-        const data = await resp.json();
-        setSchemes(data.schemes || []);
+        setSchemes(await schemesService.list({ state: profile?.location }));
       } catch {
         setSchemes([]);
       } finally {

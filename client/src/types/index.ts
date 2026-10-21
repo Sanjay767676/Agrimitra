@@ -43,11 +43,3 @@ export interface Language {
   name: string;
   nativeName: string;
 }
-
-export interface VoiceSettings {
-  sttEnabled: boolean;
-  ttsEnabled: boolean;
-  sttProvider: 'browser' | 'google';
-  ttsProvider: 'browser' | 'google';
-  language: string;
-}

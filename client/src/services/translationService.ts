@@ -1,6 +1,4 @@
 class TranslationService {
-  constructor() {}
-
   async translateText(text: string, fromLang: string, toLang: string): Promise<string> {
     // If languages are the same, return original text
     if (fromLang === toLang) {
