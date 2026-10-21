@@ -6,9 +6,7 @@ dist
 build
 
 # Environment files (never commit secrets)
-.env
-.env.*
-!.env.example
+
 
 # Editor / OS
 .DS_Store
