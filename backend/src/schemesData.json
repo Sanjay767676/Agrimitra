@@ -1,0 +1,179 @@
+[
+  {
+    "id": "pm-kisan",
+    "title": "PM-KISAN (Pradhan Mantri Kisan Samman Nidhi)",
+    "ministry": "Ministry of Agriculture and Farmers Welfare",
+    "state": "ALL",
+    "category": "income-support",
+    "url": "https://pmkisan.gov.in/",
+    "applicationUrl": "https://pmkisan.gov.in/",
+    "description": "Financial benefit of ₹6,000 per year in three equal 4-monthly installments directly transferred to bank accounts of farmer families.",
+    "benefits": "₹6,000 / year direct benefit transfer"
+  },
+  {
+    "id": "pmfby",
+    "title": "Pradhan Mantri Fasal Bima Yojana (PMFBY)",
+    "ministry": "Ministry of Agriculture and Farmers Welfare",
+    "state": "ALL",
+    "category": "crop-insurance",
+    "url": "https://pmfby.gov.in/",
+    "applicationUrl": "https://pmfby.gov.in/",
+    "description": "Comprehensive crop insurance scheme providing financial support against unforeseen non-preventable natural risks from pre-sowing to post-harvest.",
+    "benefits": "Affordable premium (1.5% to 2% max), comprehensive claim settlement"
+  },
+  {
+    "id": "kcc",
+    "title": "Kisan Credit Card (KCC) Scheme",
+    "ministry": "Ministry of Finance & Agriculture",
+    "state": "ALL",
+    "category": "credit",
+    "url": "https://www.myscheme.gov.in/schemes/kcc",
+    "applicationUrl": "https://www.myscheme.gov.in/schemes/kcc",
+    "description": "Timely credit for crop cultivation, post-harvest expenses, produce marketing, consumption requirements, and maintenance of farm assets at concessional interest rate of 4% (with prompt repayment).",
+    "benefits": "Up to ₹3 Lakh institutional credit at 4% interest rate"
+  },
+  {
+    "id": "pmksy",
+    "title": "Pradhan Mantri Krishi Sinchayee Yojana (PMKSY) - Per Drop More Crop",
+    "ministry": "Department of Agriculture & Farmers Welfare",
+    "state": "ALL",
+    "category": "irrigation",
+    "url": "https://pmksy.gov.in/",
+    "applicationUrl": "https://pmksy.gov.in/",
+    "description": "Subsidies for precision micro-irrigation systems (drip and sprinkler) to enhance water efficiency and crop productivity.",
+    "benefits": "Up to 55% subsidy for small/marginal farmers, 45% for other farmers"
+  },
+  {
+    "id": "smam",
+    "title": "Sub-Mission on Agricultural Mechanization (SMAM)",
+    "ministry": "Ministry of Agriculture and Farmers Welfare",
+    "state": "ALL",
+    "category": "equipment",
+    "url": "https://agrimachinery.nic.in/",
+    "applicationUrl": "https://agrimachinery.nic.in/",
+    "description": "Subsidies on purchase of agricultural machinery including power tillers, tractors, combine harvesters, laser land levelers, and custom hiring centers.",
+    "benefits": "40% to 50% subsidy on procurement of agricultural machinery"
+  },
+  {
+    "id": "pkvy",
+    "title": "Paramparagat Krishi Vikas Yojana (PKVY)",
+    "ministry": "Ministry of Agriculture and Farmers Welfare",
+    "state": "ALL",
+    "category": "fertilizers",
+    "url": "https://pgsindia-ncof.gov.in/pkvy/index.aspx",
+    "applicationUrl": "https://pgsindia-ncof.gov.in/pkvy/index.aspx",
+    "description": "Promotion of organic farming through cluster approach and PGS (Participatory Guarantee System) certification. Financial assistance of ₹50,000/ha for organic conversion.",
+    "benefits": "₹50,000 per hectare financial aid for organic inputs and certification"
+  },
+  {
+    "id": "shc",
+    "title": "Soil Health Card Scheme",
+    "ministry": "Ministry of Agriculture and Farmers Welfare",
+    "state": "ALL",
+    "category": "soil",
+    "url": "https://soilhealth.dac.gov.in/",
+    "applicationUrl": "https://soilhealth.dac.gov.in/",
+    "description": "Provides customized soil fertility status and nutrient dosage recommendations for 12 parameters to optimize fertilizer use and increase yield.",
+    "benefits": "Free periodic soil testing and dosage report every 2 years"
+  },
+  {
+    "id": "cdpnerec",
+    "title": "Coffee Development Programme in North Eastern Region: Expansion of Coffee",
+    "ministry": "Ministry Of Commerce And Industry",
+    "state": "ALL",
+    "category": "agriculture",
+    "url": "https://www.myscheme.gov.in/schemes/cdpnerec",
+    "applicationUrl": "https://www.myscheme.gov.in/schemes/cdpnerec",
+    "description": "The scheme \"Coffee Development Programme in North Eastern Region: Expansion of Coffee\" by the Coffee Board, Department of Commerce, Ministry of Commerce and Industry, aims to facilitate afforestation in the Jhum lands and help settle the tribals on a permanent footing."
+  },
+  {
+    "id": "rkvp",
+    "title": "Rashtriya Krishi Vigyan Puraskar",
+    "ministry": "Ministry Of Agriculture and Farmers Welfare",
+    "state": "ALL",
+    "category": "agriculture",
+    "url": "https://www.myscheme.gov.in/schemes/rkvp",
+    "applicationUrl": "https://www.myscheme.gov.in/schemes/rkvp",
+    "description": "The Rashtriya Krishi Vigyan Puraskar (RKVP) aims to honor scientists and technical experts for outstanding contributions and innovations in agriculture and allied sciences."
+  },
+  {
+    "id": "apvcrrm",
+    "title": "Assistance for Planting Vegetable Crops for Raw and Ripe Mandap",
+    "ministry": "Gujarat",
+    "state": "Gujarat",
+    "category": "agriculture",
+    "url": "https://www.myscheme.gov.in/schemes/apvcrrm",
+    "applicationUrl": "https://www.myscheme.gov.in/schemes/apvcrrm",
+    "description": "The scheme provides financial assistance to farmers in Gujarat for setting up vegetable trellises (Mandap) for raw, semi-ripe, and ripe vegetables, with varying support for General, SC, and ST farmers."
+  },
+  {
+    "id": "ptpapmh",
+    "title": "A Program to Provide 90 Percent Assistance in Planting Material of Horticultural Fruit Crops",
+    "ministry": "Gujarat",
+    "state": "Gujarat",
+    "category": "agriculture",
+    "url": "https://www.myscheme.gov.in/schemes/ptpapmh",
+    "applicationUrl": "https://www.myscheme.gov.in/schemes/ptpapmh",
+    "description": "This scheme offers 90% financial assistance to farmers for purchasing planting materials of fruit crops to promote horticulture."
+  },
+  {
+    "id": "kvny",
+    "title": "Krishi Vidya Nidhi Yojana",
+    "ministry": "Odisha",
+    "state": "Odisha",
+    "category": "agriculture",
+    "url": "https://www.myscheme.gov.in/schemes/kvny",
+    "applicationUrl": "https://www.myscheme.gov.in/schemes/kvny",
+    "description": "The scheme aims to provide merit-based financial assistance to children of CM-KISAN beneficiaries pursuing professional and technical courses, supporting higher education through Direct Benefit Transfer."
+  },
+  {
+    "id": "ifpiftrainingkitguj",
+    "title": "To Increase Fish Seed Production and Inland Fisheries Resources in Tribal Areas: Training Kit - Gujarat",
+    "ministry": "Gujarat",
+    "state": "Gujarat",
+    "category": "agriculture",
+    "url": "https://www.myscheme.gov.in/schemes/ifpiftrainingkitguj",
+    "applicationUrl": "https://www.myscheme.gov.in/schemes/ifpiftrainingkitguj",
+    "description": "The scheme aims to provide training and equipment to boost inland fisheries among Scheduled Tribe beneficiaries."
+  },
+  {
+    "id": "ucuk",
+    "title": "Udhyan Card",
+    "ministry": "Uttarakhand",
+    "state": "Uttarakhand",
+    "category": "agriculture",
+    "url": "https://www.myscheme.gov.in/schemes/ucuk",
+    "applicationUrl": "https://www.myscheme.gov.in/schemes/ucuk",
+    "description": "It aims to create a unified identification system for farmers engaged in horticulture activities, enabling them to access all horticulture-related schemes and benefits provided by the Government of Uttarakhand."
+  },
+  {
+    "id": "evcu",
+    "title": "Establishment of Vermicompost Units",
+    "ministry": "Uttarakhand",
+    "state": "Uttarakhand",
+    "category": "agriculture",
+    "url": "https://www.myscheme.gov.in/schemes/evcu",
+    "applicationUrl": "https://www.myscheme.gov.in/schemes/evcu",
+    "description": "The scheme aims to promote sustainable agriculture and organic farming by providing financial assistance for setting up vermicompost units to farmers and women self-help groups."
+  },
+  {
+    "id": "vdaps",
+    "title": "Very Dense Apple Plantation Scheme",
+    "ministry": "Uttarakhand",
+    "state": "Uttarakhand",
+    "category": "agriculture",
+    "url": "https://www.myscheme.gov.in/schemes/vdaps",
+    "applicationUrl": "https://www.myscheme.gov.in/schemes/vdaps",
+    "description": "The scheme aims to promote intensive apple cultivation among farmers by establishing modern orchards with high-yielding varieties and providing financial assistance through a 60% subsidy on saplings, thereby enhancing productivity and increasing farmers’ income."
+  },
+  {
+    "id": "aapcap",
+    "title": "Aromatic Awareness Programme - Centre for Aromatic Plants",
+    "ministry": "Uttarakhand",
+    "state": "Uttarakhand",
+    "category": "agriculture",
+    "url": "https://www.myscheme.gov.in/schemes/aapcap",
+    "applicationUrl": "https://www.myscheme.gov.in/schemes/aapcap",
+    "description": "The scheme aims to raise awareness about aromatic plants and their benefits, and to provide guidance on cultivation practices suitable to different agricultural climates."
+  }
+]
