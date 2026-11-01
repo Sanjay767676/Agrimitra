@@ -86,6 +86,7 @@ export default function Chat() {
     if (isRecording) {
       stopRecording();
     } else {
+      clearMicError();
       const langCode = profile?.chatbotLanguage || "hi";
       startRecording((transcript) => {
         setInputMessage(transcript);

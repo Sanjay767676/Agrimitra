@@ -2,6 +2,8 @@
  * Google Text-to-Speech (TTS) natural voice engine for Indian languages
  */
 
+import { translateTextWithAI } from "./translator";
+
 const LANG_MAPPING: Record<string, string> = {
   hi: "hi",
   en: "en-in",
@@ -18,6 +20,19 @@ const LANG_MAPPING: Record<string, string> = {
   as: "as"
 };
 
+const SCRIPT_RANGES: Record<string, RegExp> = {
+  ta: /[\u0B80-\u0BFF]/,
+  hi: /[\u0900-\u097F]/,
+  te: /[\u0C00-\u0C7F]/,
+  kn: /[\u0C80-\u0CFF]/,
+  ml: /[\u0D00-\u0D7F]/,
+  bn: /[\u0980-\u09FF]/,
+  mr: /[\u0900-\u097F]/,
+  gu: /[\u0A80-\u0AFF]/,
+  pa: /[\u0A00-\u0A7F]/,
+  ur: /[\u0600-\u06FF]/
+};
+
 /**
  * Split long AI responses into natural speech chunks under 180 chars
  */
@@ -26,7 +41,7 @@ function splitIntoSpeechChunks(text: string): string[] {
   const clean = text
     .replace(/[*#`_~]/g, "")
     .replace(/https?:\/\/\S+/g, "")
-    .replace(/[🌾🌱🚜🌧️💧☀️]/g, "")
+    .replace(/[🌾🌱🚜🌧️💧☀️👋✨✔️⚠️📦💰]/g, "")
     .trim();
 
   if (!clean) return [];
@@ -63,12 +78,25 @@ function splitIntoSpeechChunks(text: string): string[] {
   }
 
   if (current) chunks.push(current);
-  return chunks.slice(0, 10); // cap to 10 chunks to prevent excess latency
+  return chunks.slice(0, 10);
 }
 
 export async function generateGoogleTTS(text: string, lang = "en"): Promise<Buffer> {
-  const tl = LANG_MAPPING[lang.toLowerCase()] || "hi";
-  const chunks = splitIntoSpeechChunks(text);
+  const normLang = lang.toLowerCase();
+  const tl = LANG_MAPPING[normLang] || "hi";
+
+  let speechText = text;
+
+  // If the target voice is an Indian language (e.g. Tamil 'ta') but the text passed is in English (e.g. from chat history),
+  // automatically translate to the target language so Google TTS speaks native Tamil words, NOT English!
+  const scriptRegex = SCRIPT_RANGES[normLang];
+  if (scriptRegex && !scriptRegex.test(speechText) && /[a-zA-Z]{3,}/.test(speechText)) {
+    try {
+      speechText = await translateTextWithAI(speechText, "en", normLang);
+    } catch {}
+  }
+
+  const chunks = splitIntoSpeechChunks(speechText);
 
   if (chunks.length === 0) {
     throw new Error("No pronounceable text provided");
@@ -100,4 +128,3 @@ export async function generateGoogleTTS(text: string, lang = "en"): Promise<Buff
 
   return Buffer.concat(audioBuffers);
 }
-

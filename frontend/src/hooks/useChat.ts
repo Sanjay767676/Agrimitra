@@ -98,9 +98,22 @@ export function useChat() {
       // Ensure response matches chatbot language
       let finalBotText = aiResponse;
       if (chatLang !== "en") {
-        // If the AI somehow replied primarily in English, translate it to the target language
-        const isEnglishOnly = /^[\x00-\x7F\s.,!?'"()-]+$/.test(aiResponse.slice(0, 100));
-        if (isEnglishOnly) {
+        const SCRIPT_RANGES: Record<string, RegExp> = {
+          ta: /[\u0B80-\u0BFF]/,
+          hi: /[\u0900-\u097F]/,
+          te: /[\u0C00-\u0C7F]/,
+          kn: /[\u0C80-\u0CFF]/,
+          ml: /[\u0D00-\u0D7F]/,
+          bn: /[\u0980-\u09FF]/,
+          mr: /[\u0900-\u097F]/,
+          gu: /[\u0A80-\u0AFF]/,
+          pa: /[\u0A00-\u0A7F]/,
+        };
+        const scriptRegex = SCRIPT_RANGES[chatLang];
+        const hasTargetScript = scriptRegex ? scriptRegex.test(aiResponse) : false;
+        const hasEnglishText = /[a-zA-Z]{3,}/.test(aiResponse);
+
+        if (!hasTargetScript && hasEnglishText) {
           finalBotText = await translationService.translateText(
             aiResponse,
             "en",
