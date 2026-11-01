@@ -14,25 +14,38 @@ export interface GovernmentScheme {
   benefits?: string;
 }
 
-// In-memory cache
-let cachedSchemes: GovernmentScheme[] = [];
-let lastFetchedTime = 0;
-const CACHE_TTL_MS = 1000 * 60 * 60 * 12; // 12 hours
+// In-memory caches by language
+const cachedSchemesByLang: Record<string, GovernmentScheme[]> = {};
 
-function loadLocalSchemes(): GovernmentScheme[] {
+function loadLocalSchemes(lang = "en"): GovernmentScheme[] {
+  const normLang = (lang || "en").toLowerCase();
+  if (cachedSchemesByLang[normLang]?.length) {
+    return cachedSchemesByLang[normLang];
+  }
+
+  const fileName = normLang === "ta" ? "schemesData_ta.json" : "schemesData.json";
   const possiblePaths = [
-    path.resolve(process.cwd(), "src/schemesData.json"),
-    path.resolve(process.cwd(), "dist/schemesData.json"),
-    path.resolve(process.cwd(), "backend/src/schemesData.json"),
-    path.resolve(process.cwd(), "backend/dist/schemesData.json")
+    path.resolve(process.cwd(), `src/${fileName}`),
+    path.resolve(process.cwd(), `dist/${fileName}`),
+    path.resolve(process.cwd(), `backend/src/${fileName}`),
+    path.resolve(process.cwd(), `backend/dist/${fileName}`)
   ];
 
   for (const p of possiblePaths) {
     if (fs.existsSync(p)) {
       try {
-        return JSON.parse(fs.readFileSync(p, "utf8"));
+        const loaded = JSON.parse(fs.readFileSync(p, "utf8"));
+        if (Array.isArray(loaded) && loaded.length > 0) {
+          cachedSchemesByLang[normLang] = loaded;
+          return loaded;
+        }
       } catch {}
     }
+  }
+
+  // Fallback to default English dataset
+  if (normLang !== "en") {
+    return loadLocalSchemes("en");
   }
   return [];
 }
@@ -58,62 +71,74 @@ export async function scrapeGovernmentSchemes(query?: string): Promise<Governmen
     const scraped = await page.evaluate(() => {
       const doc = (globalThis as any).document;
       const links = doc.querySelectorAll('a[href*="/schemes/"]');
-      const results: GovernmentScheme[] = [];
+      const items: any[] = [];
+      const seen = new Set<string>();
+
       links.forEach((a: any) => {
-        if (results.length >= 15) return;
-        const container = a.closest("div.cursor-pointer") || a.parentElement?.parentElement || a;
-        const lines = (container.innerText || "").split("\n").map((l: string) => l.trim()).filter(Boolean);
-        const title = lines[0] || "";
-        const ministryOrState = lines[1] || "Ministry of Agriculture";
-        const desc = lines.slice(2).join(" ") || "Government welfare scheme for farmers and rural development.";
+        const titleEl = a.querySelector("h2, h3, h4, p, span");
+        const title = titleEl ? titleEl.textContent?.trim() : a.textContent?.trim();
         const href = a.getAttribute("href") || "";
 
-        if (title && title.length > 5 && href) {
-          const id = href.replace("/schemes/", "").toLowerCase().replace(/[^a-z0-9]/g, "-");
-          results.push({
+        if (title && title.length > 5 && !seen.has(href)) {
+          seen.add(href);
+          const fullUrl = href.startsWith("http") ? href : `https://www.myscheme.gov.in${href}`;
+          const id = href.replace("/schemes/", "").replace(/\//g, "-") || `scheme-${Date.now()}`;
+
+          let desc = "Government scheme for agricultural support and welfare benefits.";
+          const parent = a.closest("div");
+          if (parent) {
+            const p = parent.querySelector("p");
+            if (p && p.textContent && p.textContent.length > 20) {
+              desc = p.textContent.trim();
+            }
+          }
+
+          items.push({
             id,
             title,
-            ministry: ministryOrState,
-            state: ministryOrState.length < 25 && !ministryOrState.toLowerCase().includes("ministry") ? ministryOrState : "ALL",
+            ministry: "Ministry of Agriculture",
+            state: "ALL",
             category: "agriculture",
-            url: href.startsWith("http") ? href : `https://www.myscheme.gov.in${href}`,
-            applicationUrl: href.startsWith("http") ? href : `https://www.myscheme.gov.in${href}`,
-            description: desc
+            url: fullUrl,
+            applicationUrl: fullUrl,
+            description: desc,
+            benefits: "Direct government agricultural assistance & subsidies"
           });
         }
       });
-      return results;
+
+      return items;
     });
 
-    await browser.close();
+    console.log(`[SchemesScraper] Scraped ${scraped.length} schemes live via Playwright`);
     return scraped;
-  } catch (err: any) {
-    console.warn(`[SchemesScraper] Playwright live scraping error (${err.message}). Using cached schemes.`);
-    if (browser) {
-      try { await browser.close(); } catch {}
-    }
+  } catch (error: any) {
+    console.warn(`[SchemesScraper] Playwright live scraping fallback:`, error.message);
     return [];
+  } finally {
+    if (browser) {
+      await browser.close().catch(() => {});
+    }
   }
 }
 
 /**
- * Get schemes filtering by state, category, or search keyword
+ * Get schemes filtering by state, category, search keyword, and language
  */
 export async function getGovernmentSchemes(params: {
   state?: string;
   category?: string;
   q?: string;
+  lang?: string;
 } = {}): Promise<GovernmentScheme[]> {
-  const { state, category, q } = params;
+  const { state, category, q, lang } = params;
+  const langKey = (lang || "en").toLowerCase();
 
-  if (cachedSchemes.length === 0 || Date.now() - lastFetchedTime > CACHE_TTL_MS) {
-    cachedSchemes = loadLocalSchemes();
-    lastFetchedTime = Date.now();
-  }
+  const schemes = loadLocalSchemes(langKey);
 
   // If search query is provided and not in cache, optionally trigger live scrape
   if (q && q.trim().length > 2) {
-    const matched = cachedSchemes.filter(s =>
+    const matched = schemes.filter(s =>
       s.title.toLowerCase().includes(q.toLowerCase()) ||
       s.description.toLowerCase().includes(q.toLowerCase())
     );
@@ -123,17 +148,11 @@ export async function getGovernmentSchemes(params: {
 
     const live = await scrapeGovernmentSchemes(q.trim());
     if (live.length > 0) {
-      // Merge into cache
-      live.forEach(item => {
-        if (!cachedSchemes.some(c => c.id === item.id)) {
-          cachedSchemes.push(item);
-        }
-      });
       return live;
     }
   }
 
-  let results = [...cachedSchemes];
+  let results = [...schemes];
 
   if (state && state.toUpperCase() !== "ALL") {
     const sLower = state.toLowerCase();
@@ -158,4 +177,3 @@ export async function getGovernmentSchemes(params: {
 
   return results;
 }
-

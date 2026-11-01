@@ -32,11 +32,13 @@ const resources = {
   as: { translation: as },
 };
 
+const savedLang = typeof window !== 'undefined' ? localStorage.getItem('i18nextLng') || 'en' : 'en';
+
 i18n
   .use(initReactI18next)
   .init({
     resources,
-    lng: 'en', // Default to English
+    lng: savedLang,
     fallbackLng: 'en',
     interpolation: {
       escapeValue: false,

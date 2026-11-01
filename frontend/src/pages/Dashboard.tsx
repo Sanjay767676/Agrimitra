@@ -46,6 +46,8 @@ export default function Dashboard() {
   const { profile } = useProfile();
   const { weather, isLoading: weatherLoading } = useWeather();
 
+  const currentLang = (i18n.language || "en").slice(0, 2).toLowerCase();
+
   // Farm input parameters
   const [location, setLocation] = useState(profile?.location || "Coimbatore, Tamil Nadu");
   const [landArea, setLandArea] = useState<number>(Number(profile?.landSize) || 2);
@@ -56,9 +58,6 @@ export default function Dashboard() {
 
   const [recommendations, setRecommendations] = useState<CropRecommendation[]>([]);
   const [loading, setLoading] = useState(false);
-  const [activeTabRoadmap, setActiveTabRoadmap] = useState<Record<string, number>>({});
-
-  const currentLang = profile?.chatbotLanguage || i18n.language || "en";
 
   // Sync with profile if updated
   useEffect(() => {
@@ -107,20 +106,35 @@ export default function Dashboard() {
     }
   }, [location, landArea, landUnit, previousCrop, soilType, irrigation, weather, currentLang]);
 
-  // Initial load
+  // Initial load and re-fetch when language changes
   useEffect(() => {
     fetchRecommendations();
   }, [fetchRecommendations]);
 
   const previousCropOptions = [
-    "Paddy (Rice)",
-    "Sugarcane",
-    "Cotton",
-    "Maize (Corn)",
-    "Banana",
-    "Turmeric",
-    "Groundnut",
-    "Vegetables (Tomato/Brinjal)",
+    { value: "Paddy (Rice)", label: currentLang === "ta" ? "நெல் / அரிசி (Paddy)" : "Paddy (Rice)" },
+    { value: "Sugarcane", label: currentLang === "ta" ? "கரும்பு (Sugarcane)" : "Sugarcane" },
+    { value: "Cotton", label: currentLang === "ta" ? "பருத்தி (Cotton)" : "Cotton" },
+    { value: "Maize (Corn)", label: currentLang === "ta" ? "மக்காச்சோளம் (Maize)" : "Maize (Corn)" },
+    { value: "Banana", label: currentLang === "ta" ? "வாழை (Banana)" : "Banana" },
+    { value: "Turmeric", label: currentLang === "ta" ? "மஞ்சள் (Turmeric)" : "Turmeric" },
+    { value: "Groundnut", label: currentLang === "ta" ? "வேர்க்கடலை (Groundnut)" : "Groundnut" },
+    { value: "Vegetables (Tomato/Brinjal)", label: currentLang === "ta" ? "காய்கறிகள் (Vegetables)" : "Vegetables (Tomato/Brinjal)" },
+  ];
+
+  const soilTypeOptions = [
+    { value: "Clay loam", label: currentLang === "ta" ? "களிமண் வண்டல் (Clay Loam)" : "Clay Loam" },
+    { value: "Red soil", label: currentLang === "ta" ? "செம்மண் (Red Loamy)" : "Red Loamy" },
+    { value: "Black cotton soil", label: currentLang === "ta" ? "கரிசல் மண் (Black Cotton Soil)" : "Black Cotton Soil" },
+    { value: "Alluvial soil", label: currentLang === "ta" ? "வண்டல் மண் (Alluvial Soil)" : "Alluvial Soil" },
+    { value: "Sandy loam", label: currentLang === "ta" ? "மணல் வண்டல் (Sandy Loam)" : "Sandy Loam" },
+  ];
+
+  const irrigationOptions = [
+    { value: "Drip", label: currentLang === "ta" ? "சொட்டு நீர்ப்பாசனம் (Drip)" : "Drip Irrigation" },
+    { value: "Canal / Flood", label: currentLang === "ta" ? "கால்வாய் / படுகை (Canal/Flood)" : "Canal / Basin" },
+    { value: "Borewell / Sprinkler", label: currentLang === "ta" ? "ஆழ்துளை கிணறு / தெளிப்பான் (Borewell/Sprinkler)" : "Borewell Sprinkler" },
+    { value: "Rainfed", label: currentLang === "ta" ? "மழை சார்ந்த பயிர் (Rainfed)" : "Rainfed" },
   ];
 
   return (
@@ -153,9 +167,11 @@ export default function Dashboard() {
                 </div>
                 <div>
                   <CardTitle className="text-base md:text-lg font-heading font-bold">
-                    Farm Parameters & Agronomic Profile
+                    {t("dashboard.farmProfileTitle", { defaultValue: "Farm Parameters & Agronomic Profile" })}
                   </CardTitle>
-                  <p className="text-xs text-muted-foreground">Adjust your land parameters to calculate realistic yields</p>
+                  <p className="text-xs text-muted-foreground">
+                    {t("dashboard.farmProfileSubtitle", { defaultValue: "Adjust your land parameters to calculate realistic yields" })}
+                  </p>
                 </div>
               </div>
 
@@ -179,14 +195,14 @@ export default function Dashboard() {
               {/* Location */}
               <div>
                 <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider block mb-1.5">
-                  Location
+                  {t("dashboard.location", { defaultValue: "Location" })}
                 </label>
                 <div className="relative">
                   <i className="fas fa-location-dot absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground text-xs"></i>
                   <Input
                     value={location}
                     onChange={(e) => setLocation(e.target.value)}
-                    placeholder="e.g. Coimbatore, Tamil Nadu"
+                    placeholder={t("dashboard.locationPlaceholder", { defaultValue: "e.g. Coimbatore, Tamil Nadu" })}
                     className="pl-8 rounded-xl text-sm"
                   />
                 </div>
@@ -195,7 +211,7 @@ export default function Dashboard() {
               {/* Land Area */}
               <div>
                 <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider block mb-1.5">
-                  Land Area
+                  {t("dashboard.landArea", { defaultValue: "Land Area" })}
                 </label>
                 <div className="flex gap-2">
                   <Input
@@ -211,8 +227,8 @@ export default function Dashboard() {
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="acres">Acres</SelectItem>
-                      <SelectItem value="hectares">Hectares</SelectItem>
+                      <SelectItem value="acres">{t("units.acres", { defaultValue: "Acres" })}</SelectItem>
+                      <SelectItem value="hectares">{t("units.hectares", { defaultValue: "Hectares" })}</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -221,7 +237,7 @@ export default function Dashboard() {
               {/* Previous Crop */}
               <div>
                 <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider block mb-1.5">
-                  Previous Crop
+                  {t("dashboard.previousCrop", { defaultValue: "Previous Crop" })}
                 </label>
                 <Select value={previousCrop} onValueChange={(v) => setPreviousCrop(v)}>
                   <SelectTrigger className="rounded-xl text-sm">
@@ -229,8 +245,8 @@ export default function Dashboard() {
                   </SelectTrigger>
                   <SelectContent>
                     {previousCropOptions.map((crop) => (
-                      <SelectItem key={crop} value={crop}>
-                        {crop}
+                      <SelectItem key={crop.value} value={crop.value}>
+                        {crop.label}
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -240,18 +256,18 @@ export default function Dashboard() {
               {/* Soil Type */}
               <div>
                 <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider block mb-1.5">
-                  Soil Type
+                  {t("dashboard.soilType", { defaultValue: "Soil Type" })}
                 </label>
                 <Select value={soilType} onValueChange={(v) => setSoilType(v)}>
                   <SelectTrigger className="rounded-xl text-sm">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="Clay loam">Clay Loam</SelectItem>
-                    <SelectItem value="Red soil">Red Loamy</SelectItem>
-                    <SelectItem value="Black cotton soil">Black Cotton Soil</SelectItem>
-                    <SelectItem value="Alluvial soil">Alluvial Soil</SelectItem>
-                    <SelectItem value="Sandy loam">Sandy Loam</SelectItem>
+                    {soilTypeOptions.map((soil) => (
+                      <SelectItem key={soil.value} value={soil.value}>
+                        {soil.label}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
               </div>
@@ -259,17 +275,18 @@ export default function Dashboard() {
               {/* Irrigation */}
               <div>
                 <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider block mb-1.5">
-                  Irrigation
+                  {t("dashboard.irrigation", { defaultValue: "Irrigation" })}
                 </label>
                 <Select value={irrigation} onValueChange={(v) => setIrrigation(v)}>
                   <SelectTrigger className="rounded-xl text-sm">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="Drip">Drip Irrigation</SelectItem>
-                    <SelectItem value="Canal / Flood">Canal / Basin</SelectItem>
-                    <SelectItem value="Borewell / Sprinkler">Borewell Sprinkler</SelectItem>
-                    <SelectItem value="Rainfed">Rainfed</SelectItem>
+                    {irrigationOptions.map((irr) => (
+                      <SelectItem key={irr.value} value={irr.value}>
+                        {irr.label}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
               </div>
@@ -283,11 +300,11 @@ export default function Dashboard() {
               >
                 {loading ? (
                   <>
-                    <i className="fas fa-spinner fa-spin mr-2"></i> Analyzing Rotation & Mandi Rates...
+                    <i className="fas fa-spinner fa-spin mr-2"></i> {t("dashboard.analyzing", { defaultValue: "Analyzing Rotation & Mandi Rates..." })}
                   </>
                 ) : (
                   <>
-                    <i className="fas fa-wand-magic-sparkles mr-2"></i> Suggest Best 3 Crops
+                    <i className="fas fa-wand-magic-sparkles mr-2"></i> {t("dashboard.suggestBtn", { defaultValue: "Suggest Best 3 Crops" })}
                   </>
                 )}
               </Button>
@@ -300,13 +317,13 @@ export default function Dashboard() {
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
             <div>
               <h3 className="text-2xl font-heading font-bold text-foreground flex items-center gap-2">
-                <span>Recommended Crops for Rotation</span>
+                <span>{t("dashboard.recommendedHeading", { defaultValue: "Recommended Crops for Rotation" })}</span>
                 <span className="text-xs font-medium text-primary bg-primary/10 px-2.5 py-1 rounded-full border border-primary/20">
-                  After {previousCrop}
+                  {t("dashboard.after", { defaultValue: "After" })} {previousCrop}
                 </span>
               </h3>
               <p className="text-xs text-muted-foreground mt-0.5">
-                Scientific crop rotation tailored for {landArea} {landUnit} in {location}
+                {t("dashboard.tailoredFor", { defaultValue: "Scientific crop rotation tailored for" })} {landArea} {landUnit} in {location}
               </p>
             </div>
           </div>
@@ -326,154 +343,166 @@ export default function Dashboard() {
 
           {!loading && recommendations.length > 0 && (
             <div className="grid lg:grid-cols-3 gap-6">
-              {recommendations.map((crop, idx) => (
-                <Card
-                  key={crop.id || idx}
-                  className="rounded-3xl border border-border hover:border-primary/50 shadow-sm hover:shadow-organic transition-all duration-300 flex flex-col justify-between bg-card overflow-hidden"
-                >
-                  <div>
-                    {/* Crop Card Header */}
-                    <div className="p-6 pb-4 border-b border-border/60 bg-muted/20">
-                      <div className="flex items-center justify-between gap-2 mb-2">
-                        <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/20">
-                          {crop.season}
-                        </span>
-                        <span className="text-xs font-bold text-emerald-700 dark:text-emerald-300 bg-emerald-500/10 px-2.5 py-0.5 rounded-full border border-emerald-500/20">
-                          {crop.suitabilityScore}% Match
-                        </span>
-                      </div>
+              {recommendations.map((crop, idx) => {
+                const displayName =
+                  currentLang !== "en" && crop.cropNameLocal ? crop.cropNameLocal : crop.cropName;
+                const secondaryName =
+                  currentLang !== "en" && crop.cropNameLocal ? crop.cropName : "";
 
-                      <h4 className="text-xl font-heading font-bold text-foreground">
-                        {crop.cropName}
-                      </h4>
-                      {crop.cropNameLocal && crop.cropNameLocal !== crop.cropName && (
-                        <p className="text-sm font-medium text-primary mt-0.5">
-                          {crop.cropNameLocal}
+                return (
+                  <Card
+                    key={crop.id || idx}
+                    className="rounded-3xl border border-border hover:border-primary/50 shadow-sm hover:shadow-organic transition-all duration-300 flex flex-col justify-between bg-card overflow-hidden"
+                  >
+                    <div>
+                      {/* Crop Card Header */}
+                      <div className="p-6 pb-4 border-b border-border/60 bg-muted/20">
+                        <div className="flex items-center justify-between gap-2 mb-2">
+                          <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/20">
+                            {crop.season}
+                          </span>
+                          <span className="text-xs font-bold text-emerald-700 dark:text-emerald-300 bg-emerald-500/10 px-2.5 py-0.5 rounded-full border border-emerald-500/20">
+                            {crop.suitabilityScore}% {t("dashboard.match", { defaultValue: "Match" })}
+                          </span>
+                        </div>
+
+                        <h4 className="text-xl font-heading font-bold text-foreground">
+                          {displayName}
+                        </h4>
+                        {secondaryName && (
+                          <p className="text-sm font-medium text-muted-foreground mt-0.5">
+                            {secondaryName}
+                          </p>
+                        )}
+                        <p className="text-xs text-muted-foreground mt-1">
+                          {t("dashboard.variety", { defaultValue: "Recommended Variety" })}:{" "}
+                          <span className="font-semibold text-foreground">{crop.variety}</span>
                         </p>
-                      )}
-                      <p className="text-xs text-muted-foreground mt-1">
-                        Recommended Variety: <span className="font-semibold text-foreground">{crop.variety}</span>
-                      </p>
-                    </div>
-
-                    {/* Key Metrics Grid */}
-                    <div className="grid grid-cols-2 gap-3 p-6 pb-4">
-                      {/* Duration */}
-                      <div className="p-3.5 rounded-2xl bg-muted/30 border border-border/80">
-                        <div className="text-[11px] uppercase font-semibold text-muted-foreground flex items-center gap-1.5 mb-1">
-                          <i className="fas fa-clock text-accent"></i> Duration
-                        </div>
-                        <div className="text-lg font-bold text-foreground">
-                          {crop.durationMonths} Months
-                        </div>
-                        <div className="text-xs text-muted-foreground">({crop.durationDays} days to harvest)</div>
                       </div>
 
-                      {/* Total Expected Yield */}
-                      <div className="p-3.5 rounded-2xl bg-muted/30 border border-border/80">
-                        <div className="text-[11px] uppercase font-semibold text-muted-foreground flex items-center gap-1.5 mb-1">
-                          <i className="fas fa-weight-hanging text-primary"></i> Total Yield
+                      {/* Key Metrics Grid */}
+                      <div className="grid grid-cols-2 gap-3 p-6 pb-4">
+                        {/* Duration */}
+                        <div className="p-3.5 rounded-2xl bg-muted/30 border border-border/80">
+                          <div className="text-[11px] uppercase font-semibold text-muted-foreground flex items-center gap-1.5 mb-1">
+                            <i className="fas fa-clock text-accent"></i> {t("dashboard.duration", { defaultValue: "Duration" })}
+                          </div>
+                          <div className="text-lg font-bold text-foreground">
+                            {crop.durationMonths} {t("dashboard.months", { defaultValue: "Months" })}
+                          </div>
+                          <div className="text-xs text-muted-foreground">
+                            ({crop.durationDays} {t("dashboard.daysToHarvest", { defaultValue: "days to harvest" })})
+                          </div>
                         </div>
-                        <div className="text-lg font-bold text-primary">
-                          {crop.expectedYield.totalYield} {crop.expectedYield.unit}
+
+                        {/* Total Expected Yield */}
+                        <div className="p-3.5 rounded-2xl bg-muted/30 border border-border/80">
+                          <div className="text-[11px] uppercase font-semibold text-muted-foreground flex items-center gap-1.5 mb-1">
+                            <i className="fas fa-weight-hanging text-primary"></i> {t("dashboard.totalYield", { defaultValue: "Total Yield" })}
+                          </div>
+                          <div className="text-lg font-bold text-primary">
+                            {crop.expectedYield.totalYield} {crop.expectedYield.unit}
+                          </div>
+                          <div className="text-xs text-muted-foreground">
+                            ({crop.expectedYield.perAcre} {t("dashboard.perAcre", { defaultValue: "Q/Acre" })})
+                          </div>
                         </div>
-                        <div className="text-xs text-muted-foreground">
-                          ({crop.expectedYield.perAcre} Q/Acre)
+
+                        {/* Current Mandi Price */}
+                        <div className="p-3.5 rounded-2xl bg-muted/30 border border-border/80">
+                          <div className="text-[11px] uppercase font-semibold text-muted-foreground flex items-center gap-1.5 mb-1">
+                            <i className="fas fa-tag text-emerald-600"></i> {t("dashboard.mandiRate", { defaultValue: "Mandi Rate" })}
+                          </div>
+                          <div className="text-lg font-bold text-foreground">
+                            ₹{crop.economics.currentMandiPricePerQuintal.toLocaleString()}
+                          </div>
+                          <div className="text-[10px] text-muted-foreground truncate" title={crop.economics.mandiSource}>
+                            {t("dashboard.mandiPerQuintal", { defaultValue: "/ quintal (APMC)" })}
+                          </div>
+                        </div>
+
+                        {/* Estimated Net Profit */}
+                        <div className="p-3.5 rounded-2xl bg-emerald-500/10 border border-emerald-500/30">
+                          <div className="text-[11px] uppercase font-semibold text-emerald-700 dark:text-emerald-300 flex items-center gap-1.5 mb-1">
+                            <i className="fas fa-chart-line text-emerald-600"></i> {t("dashboard.netProfit", { defaultValue: "Net Profit" })}
+                          </div>
+                          <div className="text-lg font-bold text-emerald-600 dark:text-emerald-400">
+                            ₹{crop.economics.netEstimatedProfit.toLocaleString()}
+                          </div>
+                          <div className="text-xs text-emerald-700 dark:text-emerald-300 font-medium">
+                            {crop.economics.roiPercent}% {t("dashboard.return", { defaultValue: "Return" })}
+                          </div>
                         </div>
                       </div>
 
-                      {/* Current Mandi Price */}
-                      <div className="p-3.5 rounded-2xl bg-muted/30 border border-border/80">
-                        <div className="text-[11px] uppercase font-semibold text-muted-foreground flex items-center gap-1.5 mb-1">
-                          <i className="fas fa-tag text-emerald-600"></i> Mandi Rate
-                        </div>
-                        <div className="text-lg font-bold text-foreground">
-                          ₹{crop.economics.currentMandiPricePerQuintal.toLocaleString()}
-                        </div>
-                        <div className="text-[10px] text-muted-foreground truncate" title={crop.economics.mandiSource}>
-                          / quintal (APMC)
-                        </div>
-                      </div>
-
-                      {/* Estimated Net Profit */}
-                      <div className="p-3.5 rounded-2xl bg-emerald-500/10 border border-emerald-500/30">
-                        <div className="text-[11px] uppercase font-semibold text-emerald-700 dark:text-emerald-300 flex items-center gap-1.5 mb-1">
-                          <i className="fas fa-chart-line text-emerald-600"></i> Net Profit
-                        </div>
-                        <div className="text-lg font-bold text-emerald-600 dark:text-emerald-400">
-                          ₹{crop.economics.netEstimatedProfit.toLocaleString()}
-                        </div>
-                        <div className="text-xs text-emerald-700 dark:text-emerald-300 font-medium">
-                          {crop.economics.roiPercent}% Return
+                      {/* Financial Summary Strip */}
+                      <div className="px-6 pb-4">
+                        <div className="p-3 rounded-2xl bg-card border border-border flex items-center justify-between text-xs">
+                          <div>
+                            <span className="text-muted-foreground">{t("dashboard.grossRevenue", { defaultValue: "Gross Revenue" })}:</span>{" "}
+                            <span className="font-semibold text-foreground">
+                              ₹{crop.economics.totalGrossRevenue.toLocaleString()}
+                            </span>
+                          </div>
+                          <div className="h-3 w-px bg-border"></div>
+                          <div>
+                            <span className="text-muted-foreground">{t("dashboard.estCost", { defaultValue: "Est. Cost" })}:</span>{" "}
+                            <span className="font-semibold text-muted-foreground">
+                              ₹{crop.economics.totalEstimatedCost.toLocaleString()}
+                            </span>
+                          </div>
                         </div>
                       </div>
-                    </div>
 
-                    {/* Financial Summary Strip */}
-                    <div className="px-6 pb-4">
-                      <div className="p-3 rounded-2xl bg-card border border-border flex items-center justify-between text-xs">
-                        <div>
-                          <span className="text-muted-foreground">Gross Revenue:</span>{" "}
-                          <span className="font-semibold text-foreground">
-                            ₹{crop.economics.totalGrossRevenue.toLocaleString()}
-                          </span>
-                        </div>
-                        <div className="h-3 w-px bg-border"></div>
-                        <div>
-                          <span className="text-muted-foreground">Est. Cost:</span>{" "}
-                          <span className="font-semibold text-muted-foreground">
-                            ₹{crop.economics.totalEstimatedCost.toLocaleString()}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Rotation Rationale */}
-                    <div className="px-6 pb-4">
-                      <h5 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2 flex items-center gap-1.5">
-                        <i className="fas fa-rotate text-primary"></i> Why After {previousCrop}?
-                      </h5>
-                      <ul className="space-y-1.5 text-xs text-foreground/90">
-                        {crop.agronomicReasons.map((reason, rIdx) => (
-                          <li key={rIdx} className="flex items-start gap-2">
-                            <i className="fas fa-check text-primary text-[10px] mt-1 shrink-0"></i>
-                            <span>{reason}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-
-                    {/* Cultivation Timeline Roadmap */}
-                    {crop.cultivationRoadmap && crop.cultivationRoadmap.length > 0 && (
-                      <div className="px-6 pb-6 border-t border-border/60 pt-4">
-                        <h5 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3 flex items-center justify-between">
-                          <span>Cultivation Schedule</span>
-                          <span className="text-[11px] font-normal text-muted-foreground">4 Key Stages</span>
+                      {/* Rotation Rationale */}
+                      <div className="px-6 pb-4">
+                        <h5 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                          <i className="fas fa-rotate text-primary"></i> {t("dashboard.whyAfter", { defaultValue: "Why After" })} {previousCrop}?
                         </h5>
-
-                        <div className="space-y-2">
-                          {crop.cultivationRoadmap.map((stage, sIdx) => (
-                            <div key={sIdx} className="p-2.5 rounded-xl bg-muted/20 border border-border text-xs">
-                              <div className="flex items-center justify-between font-semibold text-foreground mb-0.5">
-                                <span className="flex items-center gap-1.5">
-                                  <span className="w-4 h-4 rounded-full bg-primary/20 text-primary text-[10px] flex items-center justify-center font-bold">
-                                    {sIdx + 1}
-                                  </span>
-                                  {stage.stage}
-                                </span>
-                                <span className="text-[10px] text-muted-foreground font-normal bg-background px-2 py-0.5 rounded-md border border-border">
-                                  {stage.timeline}
-                                </span>
-                              </div>
-                              <p className="text-muted-foreground text-[11px] pl-5">{stage.activities}</p>
-                            </div>
+                        <ul className="space-y-1.5 text-xs text-foreground/90">
+                          {crop.agronomicReasons.map((reason, rIdx) => (
+                            <li key={rIdx} className="flex items-start gap-2">
+                              <i className="fas fa-check text-primary text-[10px] mt-1 shrink-0"></i>
+                              <span>{reason}</span>
+                            </li>
                           ))}
-                        </div>
+                        </ul>
                       </div>
-                    )}
-                  </div>
-                </Card>
-              ))}
+
+                      {/* Cultivation Timeline Roadmap */}
+                      {crop.cultivationRoadmap && crop.cultivationRoadmap.length > 0 && (
+                        <div className="px-6 pb-6 border-t border-border/60 pt-4">
+                          <h5 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3 flex items-center justify-between">
+                            <span>{t("dashboard.cultivationSchedule", { defaultValue: "Cultivation Schedule" })}</span>
+                            <span className="text-[11px] font-normal text-muted-foreground">
+                              {t("dashboard.stages", { defaultValue: "4 Key Stages" })}
+                            </span>
+                          </h5>
+
+                          <div className="space-y-2">
+                            {crop.cultivationRoadmap.map((stage, sIdx) => (
+                              <div key={sIdx} className="p-2.5 rounded-xl bg-muted/20 border border-border text-xs">
+                                <div className="flex items-center justify-between font-semibold text-foreground mb-0.5">
+                                  <span className="flex items-center gap-1.5">
+                                    <span className="w-4 h-4 rounded-full bg-primary/20 text-primary text-[10px] flex items-center justify-center font-bold">
+                                      {sIdx + 1}
+                                    </span>
+                                    {stage.stage}
+                                  </span>
+                                  <span className="text-[10px] text-muted-foreground font-normal bg-background px-2 py-0.5 rounded-md border border-border">
+                                    {stage.timeline}
+                                  </span>
+                                </div>
+                                <p className="text-muted-foreground text-[11px] pl-5">{stage.activities}</p>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </Card>
+                );
+              })}
             </div>
           )}
         </div>

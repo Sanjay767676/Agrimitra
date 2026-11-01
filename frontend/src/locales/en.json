@@ -5,7 +5,8 @@
     "schemes": "Schemes",
     "marketplace": "Marketplace",
     "chat": "Chat",
-    "profile": "Profile"
+    "profile": "Profile",
+    "signOut": "Sign out"
   },
   "landing": {
     "title": "Agrimitra",
@@ -98,21 +99,76 @@
     "bigha": "Bigha",
     "guntha": "Guntha"
   },
+  "schemes": {
+    "badge": "National & State Portals",
+    "title": "Government Welfare Schemes",
+    "subtitle": "Verified agricultural subsidies, credit support, crop insurance, and solar equipment assistance with live translated guidelines.",
+    "searchPlaceholder": "Search schemes (e.g. Kisan, Drip, Subsidy, Insurance)...",
+    "all": "All",
+    "incomeSupport": "Income Support",
+    "cropInsurance": "Crop Insurance",
+    "creditLoans": "Credit & Loans",
+    "irrigation": "Irrigation",
+    "equipment": "Equipment / Machinery",
+    "fertilizers": "Fertilizers & Soil",
+    "officialPortal": "Official Portal",
+    "applyViewScheme": "Apply / View Scheme",
+    "noSchemes": "No matching government schemes found",
+    "tryDifferent": "Try searching with different terms or selecting another category filter."
+  },
   "dashboard": {
-    "title": "Farm Dashboard",
-    "subtitle": "Monitor your crop performance and farming analytics",
-    "cropHealth": "Crop Health",
-    "weatherForecast": "Weather Forecast",
-    "marketPrice": "Market Price",
-    "yieldAnalytics": "Yield Analytics"
+    "badge": "Agronomic AI Advisory & Mandi Analytics",
+    "title": "Crop Suggestion & Yield Analytics",
+    "subtitle": "Tailored crop suggestions considering your previous crop rotation, land area, current weather patterns, and real-time Mandi market rates.",
+    "farmProfileTitle": "Farm Parameters & Agronomic Profile",
+    "farmProfileSubtitle": "Adjust your land parameters to calculate realistic yields",
+    "location": "Location",
+    "locationPlaceholder": "e.g. Coimbatore, Tamil Nadu",
+    "landArea": "Land Area",
+    "previousCrop": "Previous Crop",
+    "soilType": "Soil Type",
+    "irrigation": "Irrigation",
+    "suggestBtn": "Suggest Best 3 Crops",
+    "analyzing": "Analyzing Rotation & Mandi Rates...",
+    "recommendedHeading": "Recommended Crops for Rotation",
+    "after": "After",
+    "tailoredFor": "Scientific crop rotation tailored for",
+    "match": "Match",
+    "variety": "Recommended Variety",
+    "duration": "Duration",
+    "months": "Months",
+    "daysToHarvest": "days to harvest",
+    "totalYield": "Total Yield",
+    "perAcre": "Q/Acre",
+    "mandiRate": "Mandi Rate",
+    "mandiPerQuintal": "/ quintal (APMC)",
+    "netProfit": "Net Profit",
+    "return": "Return",
+    "grossRevenue": "Gross Revenue",
+    "estCost": "Est. Cost",
+    "whyAfter": "Why After",
+    "cultivationSchedule": "Cultivation Schedule",
+    "stages": "4 Key Stages"
   },
   "marketplace": {
-    "title": "Agricultural Marketplace",
-    "subtitle": "Buy and sell farming equipment, seeds, and produce",
-    "equipment": "Equipment",
-    "seeds": "Seeds & Plants",
-    "fertilizers": "Fertilizers",
-    "produce": "Produce"
+    "badge": "Verified Agriculture Hub",
+    "title": "Farming Marketplace",
+    "subtitle": "Verified farm equipment, high-yield seeds, fertilizers, and organic crop protection with live market rates.",
+    "buyNow": "Buy Now",
+    "trendingTitle": "AI Recommended for your region",
+    "trendingPesticides": "Recommended Pesticides & Protection",
+    "trendingEquipment": "Recommended Farm Equipment",
+    "noPesticides": "No suggestions available",
+    "noEquipment": "No suggestions available",
+    "categories": {
+      "equipment": "Equipment",
+      "seeds": "Seeds & Plants",
+      "fertilizers": "Fertilizers",
+      "produce": "Crop Protection"
+    }
+  },
+  "common": {
+    "search": "Search"
   },
   "footer": {
     "tagline": "Empowering farmers with AI-driven agricultural solutions",

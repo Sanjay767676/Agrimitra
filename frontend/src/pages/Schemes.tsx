@@ -5,17 +5,15 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
 import { schemesService, type SchemeItem } from "../services/schemesService";
-import { useProfile } from "../hooks/useProfile";
 
 export default function Schemes() {
   const { t, i18n } = useTranslation();
-  const { profile } = useProfile();
   const [schemes, setSchemes] = useState<SchemeItem[]>([]);
   const [loading, setLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState("");
 
-  const currentLang = profile?.chatbotLanguage || i18n.language || "en";
+  const currentLang = (i18n.language || "en").slice(0, 2).toLowerCase();
 
   const categories = [
     { label: t("schemes.all", { defaultValue: "All" }), value: "" },
@@ -148,9 +146,9 @@ export default function Schemes() {
                     <span className="text-xs font-medium text-primary bg-primary/10 px-3 py-1 rounded-full">
                       {s.ministry || s.state || "National Scheme"}
                     </span>
-                    {(s.benefit || s.benefits) && (
+                    {(s.benefits || s.benefit) && (
                       <span className="text-xs font-semibold text-accent bg-accent/10 px-3 py-1 rounded-full border border-accent/20">
-                        {s.benefit || s.benefits}
+                        {s.benefits || s.benefit}
                       </span>
                     )}
                   </div>
@@ -165,7 +163,7 @@ export default function Schemes() {
                   <div className="pt-2 flex items-center justify-between border-t border-border/60">
                     <span className="text-xs text-muted-foreground">
                       <i className="fas fa-shield-halved text-primary mr-1"></i>
-                      Official Portal
+                      {t("schemes.officialPortal", { defaultValue: "Official Portal" })}
                     </span>
                     <a
                       href={s.applicationUrl || s.url}
@@ -174,7 +172,7 @@ export default function Schemes() {
                       className="inline-flex items-center gap-1.5 text-xs font-semibold bg-primary/10 hover:bg-primary text-primary hover:text-primary-foreground py-2 px-3.5 rounded-xl transition-colors"
                       data-testid={`link-apply-scheme-${idx}`}
                     >
-                      <span>Apply / View Scheme</span>
+                      <span>{t("schemes.applyViewScheme", { defaultValue: "Apply / View Scheme" })}</span>
                       <i className="fas fa-arrow-up-right-from-square text-[10px]"></i>
                     </a>
                   </div>
@@ -187,9 +185,11 @@ export default function Schemes() {
         {!loading && schemes.length === 0 && (
           <Card className="rounded-2xl border border-dashed border-border p-12 text-center">
             <i className="fas fa-landmark text-4xl text-muted-foreground/40 mb-3"></i>
-            <p className="text-muted-foreground font-medium">No matching government schemes found</p>
+            <p className="text-muted-foreground font-medium">
+              {t("schemes.noSchemes", { defaultValue: "No matching government schemes found" })}
+            </p>
             <p className="text-xs text-muted-foreground mt-1">
-              Try searching with different terms or selecting another category filter.
+              {t("schemes.tryDifferent", { defaultValue: "Try searching with different terms or selecting another category filter." })}
             </p>
           </Card>
         )}
@@ -197,4 +197,3 @@ export default function Schemes() {
     </div>
   );
 }
-

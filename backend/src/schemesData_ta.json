@@ -1,0 +1,189 @@
+[
+  {
+    "id": "pm-kisan",
+    "title": "பிஎம்-கிசான் (பிரதான் மந்திரி கிசான் சம்மான் நிதி)",
+    "ministry": "விவசாயம் மற்றும் உழவர் நல அமைச்சகம்",
+    "state": "ALL",
+    "category": "income-support",
+    "url": "https://pmkisan.gov.in/",
+    "applicationUrl": "https://pmkisan.gov.in/",
+    "description": "விவசாய குடும்பங்களின் வங்கிக் கணக்கில் ஆண்டுக்கு ₹6,000 நிதி உதவி, நான்கு மாத இடைவெளியில் தலா ₹2,000 வீதம் நேரடியாக வரவு வைக்கப்படுகிறது.",
+    "benefits": "ஆண்டுக்கு ₹6,000 நேரடி பணப் பரிமாற்றம்"
+  },
+  {
+    "id": "pmfby",
+    "title": "பிரதான் மந்திரி பயிர்க் காப்பீட்டுத் திட்டம் (PMFBY)",
+    "ministry": "விவசாயம் மற்றும் உழவர் நல அமைச்சகம்",
+    "state": "ALL",
+    "category": "crop-insurance",
+    "url": "https://pmfby.gov.in/",
+    "applicationUrl": "https://pmfby.gov.in/",
+    "description": "விதைப்பு முதல் அறுவடை வரை ஏற்படும் எதிர்பாராத இயற்கை இடர்பாடுகள், வறட்சி, பூச்சித் தாக்குதல் மற்றும் வெள்ள பாதிப்புகளுக்கு விரிவான பயிர்க் காப்பீடு.",
+    "benefits": "குறைந்த பிரீமியம் (1.5% முதல் 2%), முழு இழப்பீட்டுத் தீர்வு"
+  },
+  {
+    "id": "kcc",
+    "title": "கிசான் கடன் அட்டை திட்டம் (KCC)",
+    "ministry": "நிதி மற்றும் விவசாய அமைச்சகம்",
+    "state": "ALL",
+    "category": "credit",
+    "url": "https://www.myscheme.gov.in/schemes/kcc",
+    "applicationUrl": "https://www.myscheme.gov.in/schemes/kcc",
+    "description": "பயிர் சாகுபடி, அறுவடைக்குப் பிந்தைய செலவுகள் மற்றும் பண்ணை பராமரிப்பிற்கு 4% சலுகை வட்டியில் ₹3 லட்சம் வரை உடனடி வங்கிக் கடன்.",
+    "benefits": "4% சலுகை வட்டியில் ₹3 லட்சம் வரை சாகுபடி கடன்"
+  },
+  {
+    "id": "pmksy",
+    "title": "பிரதான் மந்திரி கிருஷி சிஞ்சாயி யோஜனா (PMKSY) - சொட்டுநீர்ப் பாசனம்",
+    "ministry": "விவசாயம் மற்றும் உழவர் நலத்துறை",
+    "state": "ALL",
+    "category": "irrigation",
+    "url": "https://pmksy.gov.in/",
+    "applicationUrl": "https://pmksy.gov.in/",
+    "description": "நீர் பயன்பாட்டுத் திறனை அதிகரிக்க மற்றும் பயிர் விளைச்சலை பெருக்க சொட்டுநீர் மற்றும் தெளிப்பான் பாசன அமைப்புகளுக்கு அரசு மானியம்.",
+    "benefits": "சிறு/குறு விவசாயிகளுக்கு 55% வரை, மற்றவர்களுக்கு 45% வரை மானியம்"
+  },
+  {
+    "id": "smam",
+    "title": "விவசாய இயந்திரமயமாக்கல் துணை இயக்கம் (SMAM)",
+    "ministry": "விவசாயம் மற்றும் உழவர் நல அமைச்சகம்",
+    "state": "ALL",
+    "category": "equipment",
+    "url": "https://agrimachinery.nic.in/",
+    "applicationUrl": "https://agrimachinery.nic.in/",
+    "description": "பவர் டில்லர்கள், டிராக்டர்கள், அறுவடை இயந்திரங்கள், லேசர் நில சமன்படுத்திகள் போன்ற விவசாய உபகரணங்கள் வாங்க மானியம்.",
+    "benefits": "விவசாய இயந்திரங்கள் வாங்க 40% முதல் 50% வரை அரசு மானியம்"
+  },
+  {
+    "id": "pkvy",
+    "title": "பாரம்பரிய கிருஷி விகாஸ் யோஜனா (PKVY) - இயற்கை விவசாயம்",
+    "ministry": "விவசாயம் மற்றும் உழவர் நல அமைச்சகம்",
+    "state": "ALL",
+    "category": "fertilizers",
+    "url": "https://pgsindia-ncof.gov.in/pkvy/index.aspx",
+    "applicationUrl": "https://pgsindia-ncof.gov.in/pkvy/index.aspx",
+    "description": "பாரம்பரிய மற்றும் இயற்கை விவசாயத்தை ஊக்குவிக்க கிளஸ்டர் முறை மற்றும் தரச் சான்றிதழ் வழங்கி ஹெக்டேருக்கு ₹50,000 வரை நிதி உதவி.",
+    "benefits": "இயற்கை உரங்கள் மற்றும் சான்றிதழுக்கு ஹெக்டேருக்கு ₹50,000 நிதி உதவி"
+  },
+  {
+    "id": "shc",
+    "title": "மண் வள அட்டை திட்டம் (Soil Health Card)",
+    "ministry": "விவசாயம் மற்றும் உழவர் நல அமைச்சகம்",
+    "state": "ALL",
+    "category": "fertilizers",
+    "url": "https://soilhealth.dac.gov.in/",
+    "applicationUrl": "https://soilhealth.dac.gov.in/",
+    "description": "மண்ணின் 12 ஊட்டச்சத்து நிலைகளை ஆய்வகம் மூலம் பரிசோதித்து, சரியான உரம் மற்றும் ஊட்டச்சத்து பரிந்துரைகளுடன் வழங்கப்படும் இலவச அட்டை.",
+    "benefits": "இலவச மண் பரிசோதனை மற்றும் உரம் பரிந்துரைகள்"
+  },
+  {
+    "id": "cdpnerec",
+    "title": "பயிர் பல்வகைப்படுத்தல் மற்றும் மாற்றுப் பயிர் திட்டம்",
+    "ministry": "விவசாயம் மற்றும் உழவர் நல அமைச்சகம்",
+    "state": "ALL",
+    "category": "income-support",
+    "url": "https://www.myscheme.gov.in/schemes/cdpnerec",
+    "applicationUrl": "https://www.myscheme.gov.in/schemes/cdpnerec",
+    "description": "அதிக நீர் உறிஞ்சும் பயிர்களுக்குப் பதிலாக மாற்றுப் பயிர்கள் மற்றும் சிறுதானியங்களை பயிரிடும் விவசாயிகளுக்கு ஊக்கத்தொகை.",
+    "benefits": "மாற்றுப் பயிர் சாகுபடிக்கு ஹெக்டேருக்கு ₹7,000 மானியம்"
+  },
+  {
+    "id": "rkvp",
+    "title": "ராஷ்ட்ரிய கிருஷி விகாஸ் யோஜனா (RKVY-RAFTAAR)",
+    "ministry": "விவசாய அமைச்சகம்",
+    "state": "ALL",
+    "category": "equipment",
+    "url": "https://rkvy.nic.in/",
+    "applicationUrl": "https://rkvy.nic.in/",
+    "description": "விவசாய உட்கட்டமைப்பு, அறுவடைக்குப் பிந்தைய கிடங்குகள், மதிப்புக்கூட்டு மையங்கள் மற்றும் உழவர் உற்பத்தியாளர் நிறுவனங்களுக்கு நிதி உதவி.",
+    "benefits": "விவசாய உட்கட்டமைப்பு திட்டங்களுக்கு 50% வரை மானியம்"
+  },
+  {
+    "id": "apvcrrm",
+    "title": "சூரிய சக்தி வேளாண் பம்ப்செட் திட்டம் (PM-KUSUM)",
+    "ministry": "புதிய மற்றும் புதுப்பிக்கத்தக்க எரிசக்தி அமைச்சகம்",
+    "state": "ALL",
+    "category": "irrigation",
+    "url": "https://pmkusum.mnre.gov.in/",
+    "applicationUrl": "https://pmkusum.mnre.gov.in/",
+    "description": "டீசல் மற்றும் மின்சார பம்புகளுக்கு மாற்றாக சோலார் பம்புகள் அமைக்கவும், விவசாய நிலங்களில் சோலார் மின் உற்பத்தி செய்யவும் 60% வரை மானியம்.",
+    "benefits": "சூரிய சக்தி பம்ப்செட்டுகளுக்கு 60% அரசு மானியம்"
+  },
+  {
+    "id": "ptpapmh",
+    "title": "தோட்டக்கலை பழப்பயிர் சாகுபடி திட்டம்",
+    "ministry": "தோட்டக்கலைத்துறை",
+    "state": "ALL",
+    "category": "agriculture",
+    "url": "https://www.myscheme.gov.in/schemes/ptpapmh",
+    "applicationUrl": "https://www.myscheme.gov.in/schemes/ptpapmh",
+    "description": "மா, கொய்யா, பலா, எலுமிச்சை போன்ற பழ மரக்கன்றுகள் நடவு செய்ய மற்றும் சொட்டுநீர்ப் பாசனத்திற்கு மானிய உதவி.",
+    "benefits": "தரமான பழக்கன்றுகள் வாங்க 90% வரை மானியம்"
+  },
+  {
+    "id": "kvny",
+    "title": "விவசாய குழந்தைகள் உயர்கல்வி உதவித்தொகை",
+    "ministry": "உயர் கல்வி & உழவர் நலத்துறை",
+    "state": "ALL",
+    "category": "agriculture",
+    "url": "https://www.myscheme.gov.in/schemes/kvny",
+    "applicationUrl": "https://www.myscheme.gov.in/schemes/kvny",
+    "description": "விவசாயிகளின் குழந்தைகள் பொறியியல், மருத்துவம் மற்றும் வேளாண்மைப் படிப்புகளில் சேர கல்விக் கட்டண உதவித்தொகை.",
+    "benefits": "கல்விக் கட்டண உதவி மற்றும் நேரடி வங்கி வரவு"
+  },
+  {
+    "id": "ifpiftrainingkitguj",
+    "title": "உள்நாட்டு மீன்வளர்ப்பு மற்றும் பயிற்சி திட்டம்",
+    "ministry": "மீன்வளத்துறை",
+    "state": "ALL",
+    "category": "agriculture",
+    "url": "https://www.myscheme.gov.in/schemes/ifpiftrainingkitguj",
+    "applicationUrl": "https://www.myscheme.gov.in/schemes/ifpiftrainingkitguj",
+    "description": "பண்ணைக் குட்டைகளில் நன்னீர் மீன் வளர்ப்பு, மீன் குஞ்சுகள் மற்றும் வலைகள் வாங்க மானியம் மற்றும் பயிற்சி.",
+    "benefits": "மீன் குஞ்சுகள் மற்றும் உபகரணங்களுக்கு 60% மானியம்"
+  },
+  {
+    "id": "ucuk",
+    "title": "விவசாயி ஒருங்கிணைந்த டிஜிட்டல் அடையாள அட்டை",
+    "ministry": "வேளாண்மை மற்றும் தோட்டக்கலைத்துறை",
+    "state": "ALL",
+    "category": "agriculture",
+    "url": "https://www.myscheme.gov.in/schemes/ucuk",
+    "applicationUrl": "https://www.myscheme.gov.in/schemes/ucuk",
+    "description": "அனைத்து அரசு மானியங்களையும் எளிதில் பெற விவசாயிகளுக்கான ஒற்றைச் சாளர டிஜிட்டல் விவசாய அடையாள அட்டை.",
+    "benefits": "அரசு சலுகைகளை உடனடியாகப் பெற நேரடி அட்டை"
+  },
+  {
+    "id": "evcu",
+    "title": "மண்புழு உரம் தயாரிப்பு அலகு அமைக்கும் திட்டம்",
+    "ministry": "வேளாண்மைத்துறை",
+    "state": "ALL",
+    "category": "fertilizers",
+    "url": "https://www.myscheme.gov.in/schemes/evcu",
+    "applicationUrl": "https://www.myscheme.gov.in/schemes/evcu",
+    "description": "நிலத்தில் மண்புழு உரம் தயாரிக்க தொட்டிகள் மற்றும் மண்புழுக்கள் வாங்க மகளிர் குழுக்கள் மற்றும் விவசாயிகளுக்கு மானியம்.",
+    "benefits": "மண்புழு உர அலகு அமைக்க 50% அரசு மானியம்"
+  },
+  {
+    "id": "vdaps",
+    "title": "அடர்ந்த பழத்தோட்ட சாகுபடி திட்டம்",
+    "ministry": "தோட்டக்கலைத்துறை",
+    "state": "ALL",
+    "category": "agriculture",
+    "url": "https://www.myscheme.gov.in/schemes/vdaps",
+    "applicationUrl": "https://www.myscheme.gov.in/schemes/vdaps",
+    "description": "அதிநவீன முறையில் அடர் நடவு பழத்தோட்டம் அமைக்கவும், வேலி மற்றும் நுண்ணீர்ப்பாசன வசதிகளுக்கும் மானியம்.",
+    "benefits": "அடர் நடவு தோட்டக்கலைக்கு சிறப்பு மானியம்"
+  },
+  {
+    "id": "aapcap",
+    "title": "நறுமண மற்றும் மருத்துவப் பயிர்கள் விழிப்புணர்வு திட்டம்",
+    "ministry": "ஆயுஷ் & விவசாயத்துறை",
+    "state": "ALL",
+    "category": "agriculture",
+    "url": "https://www.myscheme.gov.in/schemes/aapcap",
+    "applicationUrl": "https://www.myscheme.gov.in/schemes/aapcap",
+    "description": "அதிக வருமானம் தரும் மருத்துவ மற்றும் நறுமணத் தாவரங்களை பயிரிட விவசாயிகளுக்கு இலவச விழிப்புணர்வு மற்றும் சந்தை இணைப்பு.",
+    "benefits": "இலவச தொழில்நுட்பப் பயிற்சி மற்றும் சந்தை ஆதரவு"
+  }
+]

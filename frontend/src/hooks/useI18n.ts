@@ -23,13 +23,23 @@ export function useI18n() {
     { code: "as", name: "Assamese", nativeName: "অসমীয়া" },
   ];
 
-  const currentLanguage = i18n.language || profile?.websiteLanguage || "en";
+  const currentLanguage =
+    i18n.language ||
+    (typeof window !== "undefined" ? localStorage.getItem("i18nextLng") : null) ||
+    profile?.websiteLanguage ||
+    "en";
 
-  const changeLanguage = (langCode: string) => {
-    i18n.changeLanguage(langCode);
+  const changeLanguage = async (langCode: string) => {
+    if (typeof window !== "undefined") {
+      localStorage.setItem("i18nextLng", langCode);
+    }
+    await i18n.changeLanguage(langCode);
     if (profile) {
-      // Persist preference in profile
-      const updated = { ...profile, websiteLanguage: langCode } as any;
+      const updated = {
+        ...profile,
+        websiteLanguage: langCode,
+        chatbotLanguage: langCode,
+      } as any;
       storageService.saveProfile(updated).catch(() => void 0);
     }
   };

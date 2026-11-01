@@ -185,32 +185,7 @@ export function registerRoutes(app: Express): void {
         q?: string;
         lang?: string;
       };
-      const schemes = await getGovernmentSchemes({ state, category, q });
-      
-      const targetLang = (lang || "").toLowerCase();
-      if (targetLang && targetLang !== "en") {
-        const translatedSchemes = await Promise.all(
-          schemes.map(async (s) => {
-            try {
-              const title = await translateTextWithAI(s.title, "en", targetLang);
-              const description = await translateTextWithAI(s.description, "en", targetLang);
-              const benefits = s.benefits ? await translateTextWithAI(s.benefits, "en", targetLang) : s.benefits;
-              const ministry = s.ministry ? await translateTextWithAI(s.ministry, "en", targetLang) : s.ministry;
-              return {
-                ...s,
-                title,
-                description,
-                benefits,
-                ministry
-              };
-            } catch {
-              return s;
-            }
-          })
-        );
-        return res.json({ schemes: translatedSchemes });
-      }
-
+      const schemes = await getGovernmentSchemes({ state, category, q, lang });
       return res.json({ schemes });
     } catch (error) {
       console.error("Schemes API error:", error);
